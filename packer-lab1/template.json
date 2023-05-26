@@ -1,0 +1,40 @@
+{
+    "builders": [
+      {
+        "type": "googlecompute",
+        "project_id": "{{user `project_id`}}",
+        "source_image_family": "debian-10",
+        "ssh_username": "packer",
+        "image_name": "hello-world-image-{{timestamp}}",
+        "image_family": "hello-world-family",
+        "zone": "{{user `zone`}}",
+        "instance_name": "packer-builder",
+        "machine_type": "n1-standard-1"
+      }
+    ],
+    "provisioners": [
+      {
+        "type": "file",
+        "source": "./app.py",
+        "destination": "/tmp/app.py"
+      },
+      {
+        "type": "file",
+        "source": "./app.service",
+        "destination": "/tmp/app.service"
+      },
+      {
+        "type": "shell",
+        "inline": [
+          "sudo apt-get update",
+          "sudo apt-get install -y python3 python3-pip",
+          "sudo pip3 install flask",
+          "sudo mv /tmp/app.py /home/app.py",
+          "sudo mv /tmp/app.service /lib/systemd/system/app.service",
+          "sudo systemctl enable app.service",
+          "sudo systemctl start app.service"
+        ]
+      }
+    ]
+    
+  }
