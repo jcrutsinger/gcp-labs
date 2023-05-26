@@ -2,14 +2,14 @@
     "builders": [
       {
         "type": "googlecompute",
-        "project_id": "{{user `project_id`}}",
         "source_image_family": "debian-10",
         "ssh_username": "packer",
         "image_name": "hello-world-image-{{timestamp}}",
-        "image_family": "hello-world-family",
-        "zone": "{{user `zone`}}",
         "instance_name": "packer-builder",
-        "machine_type": "n1-standard-1"
+        "machine_type": "n1-standard-1",
+        "project_id": "project-1-359102",
+        "image_family": "hello-world-family",
+        "zone": "us-central1-a"
       }
     ],
     "provisioners": [
