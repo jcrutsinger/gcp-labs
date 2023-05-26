@@ -1,0 +1,52 @@
+{
+    "builders": [
+      {
+        "type": "googlecompute",
+        "source_image_family": "debian-10",
+        "ssh_username": "packer",
+        "image_name": "packer-challenge-{{timestamp}}",
+        "instance_name": "packer-challenge",
+        "machine_type": "n1-standard-1",
+        "project_id": "project-1-359102",
+        "image_family": "packer-challenge-family",
+        "zone": "us-central1-a"
+      }
+    ],
+    "provisioners": [
+      {
+        "type": "file",
+        "source": "./app.py",
+        "destination": "/tmp/app.py"
+      },
+      {
+        "type": "file",
+        "source": "./app.service",
+        "destination": "/tmp/app.service"
+      },
+      {
+        "type": "file",
+        "source": "./db.py",
+        "destination": "/tmp/db.py"
+      },
+      {
+        "type": "file",
+        "source": "./home.html",
+        "destination": "/tmp/home.html"
+      },
+      {
+        "type": "shell",
+        "inline": [
+          "sudo apt-get update",
+          "sudo apt-get install -y python3 python3-pip",
+          "sudo pip3 install flask",
+          "sudo mv /tmp/app.py /home/myapp/app.py",
+          "sudo mv /tmp/db.py /home/myapp/db.py",
+          "sudo mv /tmp/home.html /home/myapp/templates/home.html",
+          "sudo mv /tmp/app.service /lib/systemd/system/app.service",
+          "sudo systemctl enable app.service",
+          "sudo systemctl start app.service"
+        ]
+      }
+    ]
+    
+  }

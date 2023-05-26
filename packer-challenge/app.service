@@ -1,0 +1,12 @@
+[Unit]
+Description=Packer Challenge
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/python3 /home/myapp/app.py
+User=root
+Group=root
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
