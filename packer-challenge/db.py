@@ -1,7 +1,7 @@
 	
 import sqlite3
  
-conn = sqlite3.connect('/home/myapp/example.db')
+conn = sqlite3.connect('/home/example.db')
 c = conn.cursor()
  
 c.execute('''CREATE TABLE students
