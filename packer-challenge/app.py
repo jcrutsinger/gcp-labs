@@ -10,7 +10,7 @@ def home():
 @app.route('/submit', methods = ['POST'])
 def submit():
     name = request.form['name']
-    conn = sqlite3.connect('example.db')
+    conn = sqlite3.connect('/home/myapp/example.db')
     c = conn.cursor()
     c.execute("INSERT INTO students (name) VALUES (?)", (name,))
     conn.commit()
