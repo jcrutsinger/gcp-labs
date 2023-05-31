@@ -18,8 +18,22 @@ resource "google_compute_network" "vpc_network" {
   name = "terraform-network"
 }
 
-resource "google_storage_bucket" "default" {
+resource "google_storage_bucket" "gcs-tf" {
   name          = "tf-challenge-lab"
+  force_destroy = false
+  location      = "US"
+  storage_class = "STANDARD"
+  versioning {
+    enabled = true
+}
+}
+
+resource "random_id" "bucket_prefix" {
+  byte_length = 8
+}
+
+resource "google_storage_bucket" "default" {
+  name          = "${random_id.bucket_prefix.hex}-bucket-tfstate"
   force_destroy = false
   location      = "US"
   storage_class = "STANDARD"
