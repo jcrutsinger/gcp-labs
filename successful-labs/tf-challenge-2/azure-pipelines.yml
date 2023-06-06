@@ -1,0 +1,29 @@
+trigger:
+- master
+
+pool:
+    vmImage: 'ubuntu-latest'
+    
+#variables:
+#- group: 'GOOGLE_CREDENTIALS_GROUP'
+
+steps:
+- task: DownloadSecureFile@1
+  name: secFile
+  inputs:
+    secureFile: 'tf_creds.json'
+
+- script: |
+    export GOOGLE_APPLICATION_CREDENTIALS=$(secFile.secureFilePath)
+    terraform init
+  displayName: 'Terraform Init'
+    
+- script: |
+    export GOOGLE_APPLICATION_CREDENTIALS=$(secFile.secureFilePath)
+    terraform plan -out=tfplan -input=false
+  displayName: 'Terraform Plan'
+    
+- script: |
+    export GOOGLE_APPLICATION_CREDENTIALS=$(secFile.secureFilePath)
+    terraform apply -auto-approve -input=false tfplan
+  displayName: 'Terraform Apply'

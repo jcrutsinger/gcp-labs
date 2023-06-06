@@ -1,0 +1,12 @@
+[Unit]
+Description=Hello World Application
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/python3 /home/app.py
+User=root
+Group=root
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

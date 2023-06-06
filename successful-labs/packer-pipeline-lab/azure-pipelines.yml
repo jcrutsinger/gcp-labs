@@ -1,0 +1,21 @@
+trigger:
+- master
+
+pool:
+    vmImage: 'ubuntu-latest'
+    
+steps:
+- task: DownloadSecureFile@1
+  name: secFile
+  inputs:
+    secureFile: 'tf_creds.json'
+
+- script: |
+    export GOOGLE_APPLICATION_CREDENTIALS=$(secFile.secureFilePath)
+    packer validate template.json
+  displayName: 'Packer Validate'
+
+- script: |
+    export GOOGLE_APPLICATION_CREDENTIALS=$(secFile.secureFilePath)
+    packer build template.json
+  displayName: 'Packer Build' 
