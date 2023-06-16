@@ -15,10 +15,11 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: quiz-backend
+  namespace: default
   labels:
     app: quiz-app
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: quiz-app
@@ -31,10 +32,10 @@ spec:
     spec:
       containers:
       - name: quiz-backend
-        image: [BACKEND_IMAGE_IDENTIFIER]
+        image: gcr.io/project-41-390015/backend_image:0.0.1
         imagePullPolicy: Always
         env:
           - name: GCLOUD_PROJECT
-            value: [GCLOUD_PROJECT]
+            value: project-41-390015 
           - name: GCLOUD_BUCKET
-            value: [GCLOUD_BUCKET]
+            value: project-41-390015-media 
