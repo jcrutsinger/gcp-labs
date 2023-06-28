@@ -1,6 +1,0 @@
-packer-service@project-1-359102.iam.gserviceaccount.com
-
-project-1-359102  Project 14  166799159971
-
-"project_id": "{{user `project_id`}}",
-"zone": "{{user `zone`}}",
